@@ -26,6 +26,8 @@ Route::get('/home', 'HomeController@index');
 
 Route::resource('admin/users', 'AdminUsersController');
 
+//Route::resource('')
+
 
 Route::get('/admin2', function(){
 

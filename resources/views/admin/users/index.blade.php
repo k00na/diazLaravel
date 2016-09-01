@@ -21,7 +21,7 @@
 			
 			<tr>
 				<td>{{ $user->name}}</td>
-				<td>{{ $user->role->name}}</td>
+				<td>{{ $user->role_id == 0 ? 'Not Asigned' : $user->role->name}}</td> 
 				<td>{{ $user->is_active == 1 ? 'Active' : 'Not Active'}}</td>
 				<td>{{ $user->email}}</td>
 				<td>{{ $user->created_at->diffForHumans()}}</td>

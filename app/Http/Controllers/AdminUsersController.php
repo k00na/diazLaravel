@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\User;
+use App\Role;
+use App\Http\Requests\CreateUserRequest;
 
 class AdminUsersController extends Controller
 {
@@ -29,10 +31,13 @@ class AdminUsersController extends Controller
      */
     public function create()
     {
-        //
+        /* NOTE - NEW STUFF
+        /  first time using the models ::lists() method
+        /  this returns data from specifed columns as an array 
+        */
+        $roles = Role::lists('name', 'id')->all();  // REMINDER: don't forget to call ->all() !!!
 
-
-        return view('admin/users/create');
+        return view('admin/users/create', compact('roles'));
     }
 
     /**
@@ -41,9 +46,14 @@ class AdminUsersController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(CreateUserRequest $request)
     {
         //
+
+        $user = User::create($request->all());
+
+        return redirect('/admin/users');
+
     }
 
     /**

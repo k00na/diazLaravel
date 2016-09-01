@@ -49,8 +49,16 @@ class AdminUsersController extends Controller
      */
     public function store(CreateUserRequest $request)
     {
-        //
+        // NEW STUFF - file persistance
 
+        /*
+            PEEP THE TECHNIQUE FOR: 
+            1) GETTING FILES OUT OF $request, 
+            2) MOVING THEM INTO SEPERATE FOLDER
+            3) PERSISTING THEM INTO THE DB
+            4) GETTING THE ID FROM PERSISTED FILE AND USE IT AS FOREGIN KEY
+            
+        */
 
         $input = $request->all();
 
@@ -65,12 +73,8 @@ class AdminUsersController extends Controller
             
         }
 
-
         $input['password'] = bcrypt($request->password);
         User::create($input);
-
-
-       /* $user = User::create($request->all());*/
 
         return redirect('/admin/users');
 
@@ -96,6 +100,10 @@ class AdminUsersController extends Controller
     public function edit($id)
     {
         //
+        $user = User::findOrFail($id);
+        $roles = Role::lists('name', 'id')->all();
+
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**

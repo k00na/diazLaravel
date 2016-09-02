@@ -61,6 +61,15 @@ class AdminUsersController extends Controller
             
         */
 
+
+        if(trim($request->password) == ''){
+
+            $input = $request->except('password');
+        } else {
+
+            $input = $request->all();
+        }
+
         $input = $request->all();
 
         if($file = $request->file('photo_id')){
@@ -119,7 +128,14 @@ class AdminUsersController extends Controller
         //
         $user = User::findOrFail($id);
 
-        $input = $request->all();
+        if(trim($request->password) == ''){
+
+            $input = $request->except('password');
+        } else {
+
+            $input = $request->all();
+            $input['password'] = bcrypt($request->password);
+        }
 
         if($file = $request->file('photo_id')){
 
@@ -167,5 +183,8 @@ class AdminUsersController extends Controller
     public function destroy($id)
     {
         //
+        User::findOrFail($id)->delete();
+
+        return redirect('/admin/users');
     }
 }

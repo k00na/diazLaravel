@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\PostsCreateRequest;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests;
 use App\Post;
-
-class PostsController extends Controller
+use App\Role;
+use App\Photo;
+class AdminPostsController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,6 +20,11 @@ class PostsController extends Controller
     public function index()
     {
         //
+
+        $posts = Post::all();
+        $roles = Role::lists('name', 'id')->all();
+
+        return view('admin.posts.index', compact('posts', 'roles'));
     }
 
     /**
@@ -27,6 +35,8 @@ class PostsController extends Controller
     public function create()
     {
         //
+
+        return view('admin.posts.create');
     }
 
     /**
@@ -35,9 +45,31 @@ class PostsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(PostsCreateRequest $request)
     {
         //
+
+        $input = $request->all();
+
+        //$input['user_id'] = Auth::user()->id;
+
+        if($file = $request->file('photo_id')){
+
+
+            $name = time() . $file->getClientOriginalName();
+
+            $file->move('images', $name);
+            //TODO: add fields to Photo model that will let you know to which User or Post the photo belongs. 
+            //TODO: question yourself about this. 
+            $photo = Photo::create(['file'=>$name]);
+
+            $input['photo_id'] = $photo->id;
+        }
+
+        $user = Auth::user();
+        $user->posts()->create($input);
+
+        return redirect('/admin/posts');
     }
 
     /**

@@ -48,8 +48,10 @@
 				{!! Form::password('password', ['class'=>'form-control']) !!}
 			</div>		
 
+			
+			
 			<div class="form-group">
-				{!! Form::submit('Update User', ['class'=>'btn btn-primary']) !!}
+				{!! Form::submit('Update User', ['class'=>'btn btn-primary col-sm-2 col-sm-offset-7']) !!}
 
 			</div>
 
@@ -57,14 +59,9 @@
 
 			{!! Form::open(['method'=>'DELETE', 'action'=>['AdminUsersController@destroy', $user->id]]) !!}
 			
+			
 			<div class="form-group">
-				{!! Form::label('name', 'Name:') !!}
-				{!! Form::text('name', null, ['class'=>'form-control']) !!}
-
-			</div>
-
-			<div class="form-group">
-				{!! Form::submit('Delete User', ['class'=>'btn btn-danger']) !!}
+				{!! Form::submit('Delete User', ['class'=>'btn btn-danger col-sm-2 col-sm-offset-1']) !!}
 
 			</div>
 

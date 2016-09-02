@@ -10,6 +10,7 @@ use App\Http\Requests;
 use App\Post;
 use App\Role;
 use App\Photo;
+use App\Category;
 class AdminPostsController extends Controller
 {
     /**
@@ -22,9 +23,9 @@ class AdminPostsController extends Controller
         //
 
         $posts = Post::all();
-        $roles = Role::lists('name', 'id')->all();
+        
 
-        return view('admin.posts.index', compact('posts', 'roles'));
+        return view('admin.posts.index', compact('posts'));
     }
 
     /**
@@ -35,8 +36,16 @@ class AdminPostsController extends Controller
     public function create()
     {
         //
+        $categories = Category::lists('name', 'id')->all();
+        
+        // NOTE: some names wont work
+            /*
+            / 'duša logo.jpg' for example
+            /
+            */
 
-        return view('admin.posts.create');
+
+        return view('admin.posts.create', compact('categories'));
     }
 
     /**

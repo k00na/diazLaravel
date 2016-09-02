@@ -11,6 +11,7 @@
 				<th>Id</th>
 				<th>Username</th>
 				<th>Title</th>
+				<th>Category</th>
 				<th>Content</th>
 				<th>Photo</th>
 				<th>Created at</th>
@@ -27,7 +28,8 @@
 						<td>{{$post->id}}</td>
 						<td>{{$post->user->name}}</td>
 						<td>{{ substr($post->title, 0, 35)}}</td>
-						<td>{{ substr($post->body, 0, 150)}}</td>
+						<td>{{$post->category ? $post->category->name : 'no category'}}</td>
+						<td>{{ substr($post->body, 0, 60)}}</td>
 						<td><img height="30" src="{{ $post->photo_id ? $post->photo->file : 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ac/No_image_available.svg/600px-No_image_available.svg.png' }}"></td>
 						<td>{{ $post->created_at->diffForHumans()}}</td>
 						<td>{{ $post->updated_at->diffForHumans()}}</td>

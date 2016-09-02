@@ -28,7 +28,7 @@ class PostsCreateRequest extends Request
             'title'=>'required',
             'body'=>'required',
             //'user_id'=>'required',
-            //'category_id'=>'required',
+            'category_id'=>'required',
             'photo_id'=>'required'
 
         ];
